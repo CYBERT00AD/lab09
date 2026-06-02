@@ -63,11 +63,13 @@ app.post('/delete', (req, res) => {
 app.use('/', restRoutes);
 
 io.on('connection', (socket) => {
-  const randomId = Math.floor(Math.random() * 10000);
-  socket.data.username = `User${randomId}`;
+  socket.data.username = 'User';
+  socket.data.color = '#000000';
 
-  const colors = ['#e74c3c', '#3498db', '#2ecc71', '#9b59b6', '#f1c40f', '#e67e22', '#1abc9c'];
-  socket.data.color = colors[Math.floor(Math.random() * colors.length)];
+  socket.on('identify', (data) => {
+    socket.data.username = data.username;
+    socket.data.color = data.color;
+  });
 
   socket.on('chat message', (msg) => {
     io.emit('chat message', {

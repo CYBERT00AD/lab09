@@ -6,6 +6,32 @@ const messages = document.getElementById('messages');
 const fileInput = document.getElementById('fileInput');
 const sendFileBtn = document.getElementById('sendFileBtn');
 
+const colors = ['#e74c3c', '#3498db', '#2ecc71', '#9b59b6', '#f1c40f', '#e67e22', '#1abc9c'];
+
+function getOrCreateUserData() {
+  const stored = localStorage.getItem('chatUserData');
+  if (stored) {
+    return JSON.parse(stored);
+  }
+
+  const randomId = Math.floor(Math.random() * 10000);
+  const username = `User${randomId}`;
+  const color = colors[Math.floor(Math.random() * colors.length)];
+
+  const data = { username, color };
+  localStorage.setItem('chatUserData', JSON.stringify(data));
+  return data;
+}
+
+const userData = getOrCreateUserData();
+
+socket.on('connect', () => {
+  socket.emit('identify', {
+    username: userData.username,
+    color: userData.color
+  });
+});
+
 function addTextMessage(username, color, text) {
   const li = document.createElement('li');
 
