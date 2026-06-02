@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Кафе Уют</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <h1>Кафе Уют</h1>
+  <h2>Управление записями меню</h2>
+
+  <p><a href="/chat">Перейти в WebSocket-чат</a></p>
+
+  <div class="block">
+    <h3>Добавить запись</h3>
+    <form action="/add" method="post">
+      <input type="text" name="name" placeholder="Название" required />
+      <input type="text" name="description" placeholder="Описание" required />
+      <button type="submit">Добавить</button>
+    </form>
+  </div>
+
+  <div class="block">
+    <h3>Обновить запись</h3>
+    <form action="/update" method="post">
+      <input type="number" name="id" placeholder="ID" required />
+      <input type="text" name="name" placeholder="Новое название" required />
+      <input type="text" name="description" placeholder="Новое описание" required />
+      <button type="submit">Обновить</button>
+    </form>
+  </div>
+
+  <div class="block">
+    <h3>Удалить запись</h3>
+    <form action="/delete" method="post">
+      <input type="number" name="id" placeholder="ID" required />
+      <button type="submit">Удалить</button>
+    </form>
+  </div>
+
+  <div class="block">
+    <h3>Список записей</h3>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Название</th>
+        <th>Описание</th>
+      </tr>
+      <% items.forEach(function(item) { %>
+        <tr>
+          <td><%= item.id %></td>
+          <td><%= item.name %></td>
+          <td><%= item.description %></td>
+        </tr>
+      <% }); %>
+    </table>
+  </div>
+</body>
+</html>
